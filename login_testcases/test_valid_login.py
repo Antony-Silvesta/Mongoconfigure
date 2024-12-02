@@ -5,7 +5,7 @@ from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 import time
 from homeobjects.test_login import LoginPage
-from configfile.config import MongoClient
+from pymongo import MongoClient
 
 # Fixture for MongoDB client connection
 @pytest.fixture(scope="module")

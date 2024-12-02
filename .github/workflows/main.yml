@@ -76,9 +76,4 @@ jobs:
           echo "TESTS_PASSED=true" >> $GITHUB_ENV
         fi
 
-    - name: Archive Test Report
-      if: always()
-      uses: actions/upload-artifact@v3
-      with:
-        name: pytest-test-report
-        path: report.html
+    
