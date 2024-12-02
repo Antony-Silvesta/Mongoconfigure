@@ -37,7 +37,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Connect to MongoDB and Initialize Collections
+    - name: Validate MongoDB Connectivity
       env:
         MONGO_URI: ${{ secrets.MONGO_URI }}
       run: |
@@ -48,12 +48,10 @@ jobs:
         client = MongoClient("${{ secrets.MONGO_URI }}")
         db = client['sampleupload']
 
-        # Initialize collections
-        if "testCollection" not in db.list_collection_names():
-            db.create_collection("testCollection")
-            print("Collection 'testCollection' created")
-        else:
-            print("Collection 'testCollection' already exists")
+        # Log existing collections
+        print("Existing collections in the database:")
+        for collection in db.list_collection_names():
+            print(f"- {collection}")
 
         client.close()
         EOF
