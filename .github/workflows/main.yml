@@ -39,22 +39,23 @@ jobs:
 
     - name: Validate MongoDB Connectivity
       env:
-        MONGO_URI: ${{ secrets.MONGO_URI }}
+          MONGO_URI: ${{ secrets.MONGO_URI || 'mongodb://localhost:27017/sampleupload' }}
       run: |
-        python - <<EOF
-        from pymongo import MongoClient
-
-        # Connect to MongoDB
-        client = MongoClient("${{ secrets.MONGO_URI }}")
-        db = client['sampleupload']
-
-        # Log existing collections
-        print("Existing collections in the database:")
-        for collection in db.list_collection_names():
-            print(f"- {collection}")
-
-        client.close()
-        EOF
+          python - <<EOF
+          from pymongo import MongoClient
+      
+          # Connect to MongoDB
+          client = MongoClient("${{ env.MONGO_URI }}")
+          db = client.get_database()
+      
+          # Log existing collections
+          print("Existing collections in the database:")
+          for collection in db.list_collection_names():
+              print(f"- {collection}")
+      
+          client.close()
+          EOF
+      
 
     - name: Run Tests
       env:
