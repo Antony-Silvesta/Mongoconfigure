@@ -1,0 +1,5 @@
+pymongo
+pytest==7.4.0
+pytest-html==3.2.0
+selenium==4.8.0
+webdriver-manager
